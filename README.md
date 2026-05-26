@@ -1,5 +1,7 @@
 # Naija Zone Bill Split App
 
+![Naija Zone Bill Split App](src/images/naijazone_split_bill.JPG)
+
 A live-updating tip calculator and bill splitter built with React + Vite.
 
 ## How to use this Repo
