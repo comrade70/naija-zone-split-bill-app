@@ -1,0 +1,509 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
+
+/* ── Design tokens ──────────────────────────────────────────── */
+:root {
+  --ink:          #008751;  
+  --ink-soft:     #4a4440;
+  --ink-muted:    #8a7e78;
+  --paper:        #faf7f2;
+  --paper-warm:   #f3ede3;
+  --paper-deep:   #e8dfd2;
+  --accent:       #0d7a6f;
+  --accent-hover: #09655b;
+  --accent-light: #e0f2f0;
+  --danger:       #c0392b;
+  --danger-light: #fdecea;
+  --border:       #cfc5bb;
+  --border-light: #e8dfd2;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --shadow-card: 0 4px 24px rgba(26,22,18,0.12), 0 1px 4px rgba(26,22,18,0.08);
+  --shadow-input: inset 0 1px 3px rgba(26,22,18,0.08);
+  --shadow-btn:  0 2px 8px rgba(26,22,18,0.15);
+
+  --transition: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Reset & base ───────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background-color: var(--paper-deep);
+  background-image:
+    radial-gradient(ellipse at 20% 10%, #d4e8e6 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 90%, #e8dfd2 0%, transparent 50%);
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 2rem 1rem 4rem;
+  color: var(--ink);
+}
+
+/* ── Receipt card ───────────────────────────────────────────── */
+.app {
+  width: 100%;
+  max-width: 440px;
+}
+
+.receipt-card {
+  background: var(--paper);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Subtle paper texture */
+.receipt-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 0;
+}
+
+.receipt-header,
+.receipt-body,
+.receipt-footer { position: relative; z-index: 1; }
+
+/* ── Perforated edge ────────────────────────────────────────── */
+.receipt-perforation {
+  height: 12px;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0,
+    transparent 8px,
+    var(--paper-deep) 8px,
+    var(--paper-deep) 12px
+  );
+  margin: 0 -1px;
+}
+
+.receipt-perforation.bottom {
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0,
+    transparent 8px,
+    var(--paper-deep) 8px,
+    var(--paper-deep) 12px
+  );
+}
+
+/* ── Header ─────────────────────────────────────────────────── */
+.receipt-header {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 1.5rem 1.75rem 1.25rem;
+}
+
+.receipt-header .receipt-perforation {
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0,
+    transparent 8px,
+    var(--ink) 8px,
+    var(--ink) 12px
+  );
+  margin-bottom: 1.25rem;
+}
+
+.logo-row {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.logo-mark {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2.25rem;
+  line-height: 1;
+  color: #ffffff;
+  background: rgba(62,207,191,0.15);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.app-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+  color: var(--paper);
+}
+
+.app-subtitle {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 300;
+  color: rgb(255, 255, 255);
+  margin-top: 2px;
+}
+
+.receipt-header .receipt-dashes {
+  color: rgba(250,247,242,0.2);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  overflow: hidden;
+}
+
+/* ── Body ───────────────────────────────────────────────────── */
+.receipt-body {
+  padding: 1.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.receipt-dashes {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  color: var(--border);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* ── Field groups ───────────────────────────────────────────── */
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.field-label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+/* ── Inputs ─────────────────────────────────────────────────── */
+.input-wrap {
+  display: flex;
+  align-items: center;
+  background: var(--paper-warm);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-input);
+  transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+  overflow: hidden;
+}
+
+.input-wrap:focus-within {
+  border-color: var(--accent);
+  background: #fff;
+  box-shadow: var(--shadow-input), 0 0 0 3px rgba(13,122,111,0.12);
+}
+
+.input-wrap.has-error {
+  border-color: var(--danger);
+  background: var(--danger-light);
+}
+
+.input-wrap.has-error:focus-within {
+  box-shadow: var(--shadow-input), 0 0 0 3px rgba(192,57,43,0.12);
+}
+
+.input-prefix {
+  padding: 0 0.625rem 0 0.875rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.9rem;
+  color: var(--ink-muted);
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.input-suffix {
+  padding: 0 0.875rem 0 0.25rem;
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.people-icon {
+  display: flex;
+  align-items: center;
+  color: var(--ink-muted);
+}
+
+.field-input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0.75rem 0.5rem 0.75rem 0;
+  font-family: 'DM Mono', monospace;
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: var(--ink);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.field-input::placeholder {
+  color: var(--border);
+  font-weight: 300;
+}
+
+/* Hide number spinners */
+.field-input::-webkit-outer-spin-button,
+.field-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+.field-input[type=number] { -moz-appearance: textfield; }
+
+/* ── Error messages ─────────────────────────────────────────── */
+.error-msg {
+  font-size: 0.75rem;
+  color: var(--danger);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  animation: slideDown 0.15s ease-out;
+}
+
+.error-msg::before {
+  content: '!';
+  display: inline-flex;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--danger);
+  color: white;
+  font-size: 0.6rem;
+  font-weight: 700;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.field-hint {
+  font-size: 0.72rem;
+  color: var(--ink-muted);
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Preset tip buttons ─────────────────────────────────────── */
+.preset-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.preset-btn {
+  padding: 0.6rem 0.25rem;
+  background: var(--paper-warm);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: all var(--transition);
+  text-align: center;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.preset-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-light);
+}
+
+.preset-btn:focus-visible {
+  outline: 2.5px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.preset-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  box-shadow: var(--shadow-btn);
+}
+
+/* ── Custom tip input ───────────────────────────────────────── */
+.custom-tip-wrap {
+  margin-top: 0.25rem;
+}
+
+.custom-tip-wrap .input-prefix {
+  font-size: 0.85rem;
+}
+
+.custom-tip-wrap.custom-active {
+  border-color: var(--accent);
+}
+
+/* ── Results ────────────────────────────────────────────────── */
+.results-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.result-label {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  font-weight: 400;
+}
+
+.result-value {
+  font-family: 'DM Mono', monospace;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+/* ── Per-person highlight ───────────────────────────────────── */
+.per-person-block {
+  background: var(--ink);
+  border-radius: var(--radius-md);
+  padding: 1.1rem 1.25rem;
+  text-align: center;
+  margin-top: 0.25rem;
+  transition: background var(--transition);
+}
+
+.per-person-label {
+  font-size: 0.68rem;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(255, 255, 255);
+  margin-bottom: 0.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.per-person-tip-hint {
+  font-size: 0.65rem;
+  color: rgb(255, 255, 255);
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+
+.per-person-amount {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2.6rem;
+  font-weight: 300;
+  line-height: 1;
+  color: rgb(250, 247, 242);
+  letter-spacing: -0.02em;
+  transition: color var(--transition), transform 0.2s ease;
+}
+
+.per-person-amount.has-value {
+  color: #ffffff;
+}
+
+.rounding-note {
+  font-size: 0.65rem;
+  color: rgb(255, 255, 255);
+  margin-top: 0.5rem;
+  letter-spacing: 0.02em;
+}
+
+/* ── Reset button ───────────────────────────────────────────── */
+.actions-row {
+  display: flex;
+  justify-content: center;
+}
+
+.reset-btn {
+  background: transparent;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.55rem 1.5rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.82rem;
+  color: var(--ink-muted);
+  cursor: pointer;
+  transition: all var(--transition);
+  letter-spacing: 0.04em;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.reset-btn:hover {
+  border-color: var(--danger);
+  color: var(--danger);
+  background: var(--danger-light);
+}
+
+.reset-btn:focus-visible {
+  outline: 2.5px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ── Footer ─────────────────────────────────────────────────── */
+.receipt-footer {
+  background: var(--paper-warm);
+  border-top: 1px solid var(--border-light);
+  padding: 0 1.75rem 1.25rem;
+}
+
+.footer-note {
+  font-size: 0.68rem;
+  color: #000503;
+  line-height: 1.5;
+  text-align: center;
+  padding-top: 0.75rem;
+  font-style: italic;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 400px) {
+  body { padding: 1rem 0.5rem 3rem; }
+
+  .receipt-header { padding: 1.25rem 1.25rem 1rem; }
+  .receipt-body   { padding: 1.25rem 1.25rem; gap: 1rem; }
+  .receipt-footer { padding: 0 1.25rem 1rem; }
+
+  .app-title { font-size: 1.25rem; }
+  .logo-mark { width: 44px; height: 44px; font-size: 1.875rem; }
+
+  .preset-btn { font-size: 0.8rem; padding: 0.55rem 0.1rem; }
+  .per-person-amount { font-size: 2.1rem; }
+}
+
+@media (min-width: 600px) {
+  body { padding: 3rem 1rem 5rem; }
+  .app { max-width: 460px; }
+}
+
+/* ── Focus visible fallback ─────────────────────────────────── */
+*:focus { outline: none; }
+*:focus-visible { outline: 2.5px solid var(--accent); outline-offset: 2px; }
