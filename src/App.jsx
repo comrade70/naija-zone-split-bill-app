@@ -197,7 +197,7 @@ export default function App() {
           <div className="logo-row">
             <span className="logo-mark" aria-hidden="true">#</span>
             <div>
-              <h1 className="app-title">Splitwise</h1>
+              <h1 className="app-title">Naija Zone</h1>
               <p className="app-subtitle">Bill & Tip Calculator</p>
             </div>
           </div>
