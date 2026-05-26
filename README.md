@@ -8,14 +8,17 @@ A live-updating tip calculator and bill splitter built with React + Vite.
 Node.js 18+ (check with `node -v`)
 
 ```bash
-# 1. Install dependencies
+# 1. Clone the repository
+git clone https://github.com/comrade70/naija-zone-split-bill-app.git
+
+# 2. Install dependencies
 npm install
 
-# 2. Start the dev server
+# 3. Start the dev server
 npm run dev
-```
 
-Then open **http://localhost:5173** in your browser.
+# 4. Open **http://localhost:5173** in your browser.
+```
 
 ## Production Build
 
